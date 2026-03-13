@@ -168,6 +168,28 @@ class Graph:
             if current_node.value not in passed:
                 dfs_inner(current_node)
 
+    def bfs(self):
+        passed: set = set()
+        def bfs_inner(node_start: Node):
+            nonlocal passed
+            current_level = deque([node_start])
+            new_level = deque()
+            level = 0
+            while current_level:
+                node = current_level.popleft()
+                passed.add(node.value)
+                print(level, node.value, node)
+                for edge in node.edges:
+                    if edge.adjacent.value not in passed:
+                        new_level.append(edge.adjacent)
+                if not current_level:
+                    current_level = new_level.copy()
+                    new_level.clear()
+                    level += 1
+        for current_node in self._graph.values():
+            if current_node.value not in passed:
+                bfs_inner(current_node)
+
 
 g = Graph(matrix=[
     [2, 1, 1, 0, 0, 0],
