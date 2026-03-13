@@ -10,7 +10,7 @@ class Node:
     #  и parents лучше всего использовать связные списки
     def __init__(self, value: object):
         self.value: object = value
-        self.edges: list[Node] = [] # ребра узла
+        self.edges: list[Edge] = [] # ребра узла
         self.parents: list[Node] = [] # родители узла
 
 class Edge:
@@ -21,52 +21,9 @@ class Edge:
         self.weight: int = weight
         self.adjacent: Node = adjacent
 
-class BaseGraph(ABC):
-    """
-    Абстрактный базовый класс для графа
-    """
-    def __init__(self, matrix: Matrix):
-        self.matrix: Matrix = matrix
-        self.graph: dict|None = None
-        self.create_graph(matrix)
-
-    def calculate_node(self) -> int:
-        """
-        Функция подсчета кол-ва вершин
-        :return:
-        """
-        pass
-
-    def calculate_edge(self) -> int:
-        """
-        Функция подсчета кол-ва ребер
-        :return:
-        """
-        pass
-
-    def searching_isolated_node(self) -> Node|list[Node]|None:
-        """
-         Функция поиска изолированной вершины
-         :return: Node: Найденная вершина(ы), либо None
-         """
-        pass
-
-    def searching_loop_node(self) -> Node|list[Node]|None:
-        """
-        Функция для поиска петли у вершин
-        :return: Node: Найденная вершина(ы), либо None
-        """
-        pass
-
-    def get_degree_all_nodes(self) -> list[Node]|None:
-        """
-        Функция для вывода всех степеней вершин в порядке убывания
-        :return: Node: Список вершин
-        """
-        pass
-
+class InterfaceGraph(ABC):
     @abstractmethod
-    def create_graph(self, matrix: Matrix) -> dict[int, Node]:
+    def initialization_graph(self, matrix: Matrix) -> dict[int, Node]:
         """
         Функция создания графа.\n
         Для представления графа используется хеш-таблицы, списки, классы,
@@ -128,3 +85,43 @@ class BaseGraph(ABC):
         :return: bool
         """
         raise NotImplementedError
+
+    @abstractmethod
+    def calculate_node(self) -> int:
+        """
+        Функция подсчета кол-ва вершин
+        :return:
+        """
+        pass
+
+    @abstractmethod
+    def calculate_edge(self) -> int:
+        """
+        Функция подсчета кол-ва ребер
+        :return:
+        """
+        pass
+
+    @abstractmethod
+    def searching_isolated_node(self) -> Node | list[Node] | None:
+        """
+         Функция поиска изолированной вершины
+         :return: Node: Найденная вершина(ы), либо None
+         """
+        pass
+
+    @abstractmethod
+    def searching_loop_node(self) -> Node | list[Node] | None:
+        """
+        Функция для поиска петли у вершин
+        :return: Node: Найденная вершина(ы), либо None
+        """
+        pass
+
+    @abstractmethod
+    def get_degree_all_nodes(self) -> list[Node] | None:
+        """
+        Функция для вывода всех степеней вершин в порядке убывания
+        :return: Node: Список вершин
+        """
+        pass
