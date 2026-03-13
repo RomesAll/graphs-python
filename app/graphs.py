@@ -155,6 +155,20 @@ class Graph:
         return self._graph[value]
 
 
+    def dfs(self):
+        passed: set = set()
+        def dfs_inner(node: Node):
+            nonlocal passed
+            print(node.value, node)
+            passed.add(node.value)
+            for edge in node.edges:
+                if edge.adjacent.value not in passed:
+                    dfs_inner(edge.adjacent)
+        for current_node in self._graph.values():
+            if current_node.value not in passed:
+                dfs_inner(current_node)
+
+
 g = Graph(matrix=[
     [2, 1, 1, 0, 0, 0],
     [1, 0, 0, 1, 1, 0],
