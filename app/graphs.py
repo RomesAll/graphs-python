@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from collections import deque
 
 Matrix = list[list[int]]
 
@@ -23,23 +24,7 @@ class Edge:
 
 class InterfaceGraph(ABC):
     @abstractmethod
-    def initialization_graph(self, matrix: Matrix) -> dict[int, Node]:
-        """
-        Функция создания графа.\n
-        Для представления графа используется хеш-таблицы, списки, классы,
-        как наиболее эффективный способ хранения данных в памяти компьютера.
-
-        Входные данные: Двумерный массив один из двух вариантов:
-        \n Матрица смежности для невзвешенного графа
-        \n Пример: [[0,1], [1,0]];
-        \n Матрица с перечислением вершин и ребер для взвешенного графа
-        \n Пример: [[1,2,5], [2,1,9]], где:
-        - 0-ой индекс от какой вершины идем;
-        - 1-й индекс к какой вершине идем;
-        - 2-й индекс вес ребра.
-        :param matrix: Двумерный массив,
-        :return: dict[int, Node]: хеш-таблица, где ключ имя - вершина, а значение - объект узла Node
-        """
+    def initialization_graph(self, matrix: Matrix):
         raise NotImplementedError
 
     @abstractmethod
@@ -125,3 +110,56 @@ class InterfaceGraph(ABC):
         :return: Node: Список вершин
         """
         pass
+
+
+class Graph:
+
+    def __init__(self, matrix: Matrix):
+        self._matrix: Matrix = matrix
+        self._graph: dict | None = None
+        self.initialization_graph(matrix)
+
+    @property
+    def graph(self):
+        return self._graph
+
+    @property
+    def matrix(self):
+        return self._matrix
+
+    @matrix.setter
+    def matrix(self, matrix: Matrix):
+        self._matrix = matrix
+        self.initialization_graph(matrix)
+
+    def initialization_graph(self, matrix: Matrix):
+        self._graph: dict = dict()
+        for row_ind, row in enumerate(matrix):
+            node: Node = self.create_or_get_node(row_ind)
+            for col_ind, col in enumerate(row):
+                if col == 0:
+                    continue
+                node_edge: Edge | None = None
+                if col == 1 and col_ind != row_ind:
+                    node_adjacent: Node = self.create_or_get_node(col_ind)
+                    node_adjacent.parents.append(node)
+                    node_edge: Edge = Edge(node_adjacent)
+                if col == 2 and col_ind == row_ind:
+                    node_edge: Edge = Edge(node)
+                node.edges.append(node_edge)
+            self._graph.update({row_ind: node})
+
+    def create_or_get_node(self, value: int):
+        if self._graph.get(value) is None:
+            self._graph[value] = Node(value)
+        return self._graph[value]
+
+
+g = Graph(matrix=[
+    [2, 1, 1, 0, 0, 0],
+    [1, 0, 0, 1, 1, 0],
+    [1, 0, 0, 0, 0, 1],
+    [0, 1, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0],
+    [0, 0, 1, 0, 0, 0],
+])
