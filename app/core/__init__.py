@@ -1,8 +1,8 @@
-from .domain_services import GraphRepository
+from .domain_services import IGraph
 from .entities import Node, Edge
 from .services import GraphService
 __all__ = [
-    'GraphRepository',
+    'IGraph',
     'Node', 'Edge',
     'GraphService',
 ]

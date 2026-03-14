@@ -1,2 +1,2 @@
-from .graph_interfaces import GraphRepository
-__all__ = [GraphRepository]
+from .graph_interfaces import IGraph
+__all__ = [IGraph]

@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
 from ..entities.graph_objects import Node
 
-class GraphRepository(ABC):
+class IGraph(ABC):
     """
     Интерфейс для класса графа
     """
     @abstractmethod
-    def initialization_graph(self, matrix: list[list[int]]):
+    def initialization_graph(self, matrix: list[list[int]], is_weighted: bool=False):
         """
         Метод для инициализации графа в памяти компьютера в виде
         хеш-таблицы, классов и списков, как наиболее эффективный
@@ -25,6 +25,7 @@ class GraphRepository(ABC):
         - Список вершин и список рёбер.
 
         :param matrix: Двумерный массив с описанием вершин и ребер
+        :param is_weighted: Граф взвешенный или невзвешенный
         :return:
         """
         raise NotImplementedError
@@ -46,7 +47,7 @@ class GraphRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def get_path(self, start: Node, end: Node) -> tuple[Node]:
+    def get_path(self, start: Node, end: Node) -> tuple[Node] | None:
         """
         Метод для поиска первого найденного пути от начала до конечного узла
         :param start: Узел начала
