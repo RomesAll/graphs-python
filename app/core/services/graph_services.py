@@ -1,4 +1,4 @@
-from app.core import GraphRepository
+from ..domain_services import GraphRepository
 
 class GraphService:
     def __init__(self, graph_repository: GraphRepository):
