@@ -90,6 +90,9 @@ class Graph(IGraph):
             self._graph[node_value] = Node(node_value)
         return self._graph[node_value]
 
+    def get_node(self, node_value: int) -> Node:
+        return self._graph.get(node_value)
+
     def get_count_node(self) -> int:
         """
         Метод подсчета количества вершин
