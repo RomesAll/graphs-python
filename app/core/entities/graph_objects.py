@@ -1,6 +1,3 @@
-
-Matrix = list[list[int]]
-
 class Node:
     """
     Класс для хранения узлов графа

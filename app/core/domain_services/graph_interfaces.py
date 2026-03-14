@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
-from ..entities.graph_objects import Matrix, Node
+from ..entities.graph_objects import Node
 
 class GraphRepository(ABC):
     """
     Интерфейс для класса графа
     """
     @abstractmethod
-    def initialization_graph(self, matrix: Matrix):
+    def initialization_graph(self, matrix: list[list[int]]):
         """
         Метод для инициализации графа в памяти компьютера в виде
         хеш-таблицы, классов и списков, как наиболее эффективный
