@@ -1,0 +1,1 @@
+from app.infrastructure.repository.graph.base import Graph
