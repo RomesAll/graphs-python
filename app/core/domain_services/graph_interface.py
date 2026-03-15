@@ -3,32 +3,15 @@ from ..entities.graph_objects import Node
 
 class IGraph(ABC):
     """
-    Интерфейс для класса графа
+    Интерфейс для класса графа с основными операциями
     """
     @abstractmethod
-    def initialization_graph(self, matrix: list[list[int]], is_weighted: bool=False):
+    def get_graph(self) -> dict[int, Node]:
         """
-        Метод для инициализации графа в памяти компьютера в виде
-        хеш-таблицы, классов и списков, как наиболее эффективный
-        способ хранения вершин и узлов в памяти.
-
-        В качестве входных данных могут быть использованы
-        следующие представления графов в виде матрицы: \n
-        - Перечисление множеств;
-        - Матрица смежности;
-        - Матрица инцидентности;
-        - Перечень рёбер;
-        - Векторы смежности;
-        - Массивы смежности;
-        - Списки смежности;
-        - Структура с оглавлением;
-        - Список вершин и список рёбер.
-
-        :param matrix: Двумерный массив с описанием вершин и ребер
-        :param is_weighted: Граф взвешенный или невзвешенный
-        :return:
+        Метод получения графа
+        :return: None
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @abstractmethod
     def dfs(self):
@@ -36,7 +19,7 @@ class IGraph(ABC):
         Метод обхода графа в глубину, с помощью рекурсии
         :return: None
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @abstractmethod
     def bfs(self):
@@ -44,7 +27,7 @@ class IGraph(ABC):
         Метод обхода графа в ширину, с помощью итеративного подхода
         :return: None
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @abstractmethod
     def get_path(self, start: Node, end: Node) -> tuple[Node] | None:
@@ -54,7 +37,7 @@ class IGraph(ABC):
         :param end: Узел конца
         :return: tuple[Node]: Кортеж из списка узлов от начала до конечного узла
         """
-        raise NotImplementedError
+        raise NotImplementedError()
 
     @abstractmethod
     def get_count_node(self) -> int:
@@ -62,7 +45,7 @@ class IGraph(ABC):
         Метод подсчета количества вершин в графе
         :return: int: кол-во вершин
         """
-        pass
+        raise NotImplementedError()
 
     @abstractmethod
     def get_count_edge(self) -> int:
@@ -70,23 +53,23 @@ class IGraph(ABC):
         Метод подсчета количества ребер в графе
         :return: int: кол-во ребер
         """
-        pass
+        raise NotImplementedError()
 
     @abstractmethod
-    def searching_isolated_node(self) -> tuple[Node]:
+    def searching_isolated_node(self) -> list[Node]:
         """
          Метод поиска изолированных вершины в графе
          :return: tuple[Node]: Найденные вершины
          """
-        pass
+        raise NotImplementedError()
 
     @abstractmethod
-    def searching_loop_node(self) -> tuple[Node]:
+    def searching_loop_node(self) -> list[Node]:
         """
         Метод для поиска петель у вершин графа
         :return: tuple[Node]: Найденные вершины
         """
-        pass
+        raise NotImplementedError()
 
     @abstractmethod
     def get_sorted_degree_nodes(self, desc: bool=False) -> dict:
@@ -95,4 +78,4 @@ class IGraph(ABC):
         :param: desc: Флаг, для сортировки в порядке убывания
         :return: Node: Список вершин
         """
-        pass
+        raise NotImplementedError()
