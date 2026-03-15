@@ -1,2 +1,3 @@
-from .graph_interfaces import IGraph
-__all__ = [IGraph]
+from .graph_interface import IGraph
+from .converter_interface import IConverterInputData
+__all__ = [IGraph, IConverterInputData]

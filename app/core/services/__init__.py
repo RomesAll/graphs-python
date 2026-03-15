@@ -1,2 +1,2 @@
-from .graph_services import GraphService
-__all__=[GraphService]
+from .graph.base import GraphServiceFile
+__all__=[GraphServiceFile]

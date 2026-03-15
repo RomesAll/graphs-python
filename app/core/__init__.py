@@ -1,8 +1,8 @@
-from .domain_services import IGraph
+from .domain_services import IGraph, IConverterInputData
 from .entities import Node, Edge
-from .services import GraphService
+from .services import GraphServiceFile
 __all__ = [
-    'IGraph',
+    'IGraph', 'IConverterInputData',
     'Node', 'Edge',
-    'GraphService',
+    'GraphServiceFile',
 ]
