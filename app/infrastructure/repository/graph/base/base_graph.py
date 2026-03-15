@@ -7,10 +7,11 @@ class Graph(IGraph):
     Класс реализации интерфейса IGraph для хранения вершин,
     узлов и дальнейшей работы с ними
     """
-    def __init__(self, matrix: list[list[int]]):
-        self._matrix: list[list[int]] = matrix
-        self._graph: dict | None = None
-        self.initialization_graph(matrix)
+    def __init__(self, graph: dict[str|int, Node]):
+        self._graph = graph
+
+    def get_graph(self) -> dict[int, Node]:
+        return self._graph.copy()
 
     @property
     def graph(self) -> dict:
@@ -19,76 +20,6 @@ class Graph(IGraph):
         :return: dict: хеш-таблица с вершинами и узлами
         """
         return self._graph
-
-    @property
-    def matrix(self) -> list[list[int]]:
-        """
-        Свойство для получения защищенного атрибута matrix
-        :return: list[list[int]]: двумерный массив с данными о графе
-        """
-        return self._matrix
-
-    @matrix.setter
-    def matrix(self, matrix: list[list[int]]):
-        """
-        Свойство для обновления защищенного атрибута matrix. После обновления
-        происходит переинициализация графа
-        :param matrix: list[list[int]]: новая матрица, двумерный массив
-        :return:
-        """
-        self._matrix = matrix
-        self.initialization_graph(matrix)
-
-    def initialization_graph(self, matrix: list[list[int]],
-                             is_weighted: bool = False):
-        """
-        Метод для инициализации графа в памяти компьютера в виде
-        хеш-таблицы, классов и списков, как наиболее эффективный
-        способ хранения вершин и узлов в памяти.
-
-        В качестве входных данных могут быть использованы
-        следующие представления графов в виде матрицы: \n
-        - Перечисление множеств;
-        - Матрица смежности (по умолчанию в классе Graph);
-        - Матрица инцидентности;
-        - Перечень рёбер;
-        - Векторы смежности;
-        - Массивы смежности;
-        - Списки смежности;
-        - Структура с оглавлением;
-        - Список вершин и список рёбер.
-
-        :param matrix: Двумерный массив с описанием вершин и ребер
-        :param is_weighted: Граф взвешенный или невзвешенный
-        :return:
-        """
-        self._graph: dict = dict()
-        for i, row in enumerate(matrix):
-            node: Node = self.__create_or_get_node(i)
-            for j, col in enumerate(row):
-                # Если элемент строки (col) равен 0, значит связи нет
-                if col == 0: continue
-                # В ином случае, если у элемента > 0, значит связь есть
-                # и нужно либо новый узел возвращать, либо создавать новый
-                adjacent_node: Node = self.__create_or_get_node(j)
-                new_edge: Edge = Edge(adjacent_node, col) \
-                    if is_weighted else Edge(adjacent_node)
-                # Если узел ведет к той же вершине из которого он произошел,
-                # то это петля, а значить атрибут parents устанавливать не надо
-                if new_edge.adjacent is not node:
-                    new_edge.adjacent.parents.append(node)
-                node.edges.append(new_edge) # добавляем новый узел к вершине
-            self._graph.update({i: node})
-
-    def __create_or_get_node(self, node_value: int) -> Node:
-        """
-        Метод для получения вершины по его значению или создания нового
-        :param node_value: Значение вершины
-        :return:
-        """
-        if self._graph.get(node_value) is None:
-            self._graph[node_value] = Node(node_value)
-        return self._graph[node_value]
 
     def get_node(self, node_value: int) -> Node:
         return self._graph.get(node_value)
@@ -114,7 +45,7 @@ class Graph(IGraph):
                     passed_node.add(node.value)
         return result_count
 
-    def searching_isolated_node(self) -> tuple[Node]:
+    def searching_isolated_node(self) -> list[Node]:
         """
         Метод для поиска изолированных вершин
         :return: tuple[Node]: Кортеж из вершин
@@ -123,9 +54,9 @@ class Graph(IGraph):
         for node in self._graph.values():
             if not node.edges and not node.parents:
                 isolated_nodes.add(node)
-        return tuple(isolated_nodes)
+        return list(isolated_nodes)
 
-    def searching_loop_node(self) -> tuple[Node]:
+    def searching_loop_node(self) -> list[Node]:
         """
         Метод для поиска вершин с петлями
         :return: tuple[Node]: Кортеж из вершин
@@ -135,7 +66,7 @@ class Graph(IGraph):
             for edge in node.edges:
                 if edge.adjacent == node:
                     loop_nodes.add(node)
-        return tuple(loop_nodes)
+        return list(loop_nodes)
 
     def get_sorted_degree_nodes(self, desc: bool=False) -> dict:
         """
@@ -191,7 +122,7 @@ class Graph(IGraph):
             if current_node.value not in passed:
                 bfs_inner(current_node)
 
-    def get_path(self, start: Node, end: Node) -> tuple[Node] | None:
+    def get_path(self, start: Node, end: Node) -> list[Node] | None:
         passed: set = set()
         path: deque = deque([start])
         stack: deque = deque([start])
@@ -211,4 +142,4 @@ class Graph(IGraph):
             if current_node != end and not has_children:
                 stack.pop()
                 continue
-        return tuple(path) if path[-1] == end else None
+        return list(path) if path[-1] == end else None
