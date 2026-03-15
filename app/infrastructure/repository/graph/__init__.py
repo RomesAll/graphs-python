@@ -1,3 +1,2 @@
-from .base import Graph
-from .extension import *
-__all__ = [Graph]
+from .base import Graph, JsonConverterListAdjacency
+__all__ = [Graph, JsonConverterListAdjacency]

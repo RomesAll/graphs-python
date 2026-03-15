@@ -1,2 +1,3 @@
 from .base_graph import Graph
-__all__ = [Graph]
+from .base_converter import JsonConverterListAdjacency
+__all__ = [Graph, JsonConverterListAdjacency]

@@ -1,2 +1,2 @@
-from repository import Graph
-__all__ = [Graph]
+from .repository import Graph, JsonConverterListAdjacency
+__all__ = [Graph, JsonConverterListAdjacency]
