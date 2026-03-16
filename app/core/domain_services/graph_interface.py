@@ -6,7 +6,7 @@ class IGraph(ABC):
     Интерфейс для класса графа с основными операциями
     """
     @abstractmethod
-    def get_graph(self) -> dict[int, Node]:
+    def graph(self) -> dict[int, Node]:
         """
         Метод получения графа
         :return: None
@@ -30,7 +30,7 @@ class IGraph(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def get_path(self, start: Node, end: Node) -> tuple[Node] | None:
+    def get_path(self, start: Node, end: Node) -> list[Node] | None:
         """
         Метод для поиска первого найденного пути от начала до конечного узла
         :param start: Узел начала
@@ -78,4 +78,7 @@ class IGraph(ABC):
         :param: desc: Флаг, для сортировки в порядке убывания
         :return: Node: Список вершин
         """
+        raise NotImplementedError()
+
+    def __call__(self, *args, **kwargs):
         raise NotImplementedError()

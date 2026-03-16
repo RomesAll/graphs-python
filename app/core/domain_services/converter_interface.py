@@ -22,7 +22,7 @@ class IConverterInputData(ABC):
     - Список вершин и список рёбер.
     """
     @abstractmethod
-    def load(self) -> dict[int, Node]:
+    def load(self) -> dict[int, Node] | None:
         """
         Метод конвертации из определенного формата данных в объект python словарь со списком смежности
         :return:
@@ -38,9 +38,16 @@ class IConverterInputData(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def save(self, data: dict):
+    def save(self, matrix: list[list[int]]) -> bool:
         """
         Метод для сохранения данных в файл
         :return:
         """
+        raise NotImplementedError()
+
+    @abstractmethod
+    def get_matrix_adjacent(self) -> list[list[int]]:
+        raise NotImplementedError()
+
+    def __call__(self, *args, **kwargs):
         raise NotImplementedError()
