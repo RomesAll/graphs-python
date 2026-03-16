@@ -10,16 +10,13 @@ class Graph(IGraph):
     def __init__(self, graph: dict[str|int, Node]):
         self._graph = graph
 
-    def get_graph(self) -> dict[int, Node]:
-        return self._graph.copy()
-
     @property
-    def graph(self) -> dict:
+    def graph(self) -> dict[int, Node]:
         """
-        Свойство для получения защищенного атрибута graph
-        :return: dict: хеш-таблица с вершинами и узлами
+        Метод для получения графа
+        :return:
         """
-        return self._graph
+        return self._graph.copy() if self._graph else None
 
     def get_node(self, node_value: int) -> Node:
         return self._graph.get(node_value)
@@ -68,7 +65,7 @@ class Graph(IGraph):
                     loop_nodes.add(node)
         return list(loop_nodes)
 
-    def get_sorted_degree_nodes(self, desc: bool=False) -> dict:
+    def get_sorted_degree_nodes(self, desc: bool=True) -> dict:
         """
         Метод для получения степеней вершин
         :param desc: Сортировка по убыванию
