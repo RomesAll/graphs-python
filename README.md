@@ -16,6 +16,7 @@
 файла с входными данными.
 
 <h3>Процесс установки </h3>
+
 ```
 git clone https://github.com/RomesAll/graphs-python.git
 cd graphs-python
