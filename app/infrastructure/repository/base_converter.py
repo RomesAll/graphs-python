@@ -12,7 +12,7 @@ class JsonConverterListAdjacency(IConverterInputData):
     в python хеш-таблицу, внутри которой храниться список смежностей, где ключ - это
     название вершины, а значение - это класс Node
     """
-    def __init__(self, file_path: str):
+    def __init__(self, *, file_path: str):
         self.file_path = file_path
         self._file_data: dict | None = self.read_file()
         self._matrix_adjacent: list[list[int]] | None = self.get_matrix_adjacent()
@@ -51,10 +51,10 @@ class JsonConverterListAdjacency(IConverterInputData):
             with open(self.file_path, 'r', encoding='utf-8') as file:
                 file_data = json.load(file)
             return file_data
-        except FileNotFoundError:
-            return None
+        except FileNotFoundError as e:
+            raise FileNotFoundError('Файл не найден') from e
         except Exception as e:
-            return None
+            raise Exception('Не удалось прочитать файл') from e
 
     def get_matrix_adjacent(self) -> list[list[int]] | None:
         try:
@@ -70,10 +70,10 @@ class JsonConverterListAdjacency(IConverterInputData):
                     index = mapping.get(col, None)
                     matrix[ind_row][index] = 1
             return matrix
-        except IndexError as exc:
-            return None
-        except TypeError as exc:
-            return None
+        except IndexError as e:
+            raise IndexError('Не удалось преобразовать входные данные в матрицу смежностей') from e
+        except TypeError as e:
+            raise TypeError('Некорректный тип входных данных') from e
 
     def save(self, data: list[list[int]]) -> bool:
         try:
@@ -82,4 +82,6 @@ class JsonConverterListAdjacency(IConverterInputData):
                 json.dump(self._file_data, file, ensure_ascii=False)
             return True
         except FileNotFoundError as e:
-            return False
+            raise FileNotFoundError('Файл не найден') from e
+        except Exception as e:
+            raise Exception('Не удалось сохранить матрицу смежностей в файл') from e
