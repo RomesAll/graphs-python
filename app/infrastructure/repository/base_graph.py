@@ -7,7 +7,7 @@ class Graph(IGraph):
     Класс реализации интерфейса IGraph для хранения вершин,
     узлов и дальнейшей работы с ними
     """
-    def __init__(self, graph: dict[str|int, Node]):
+    def __init__(self, *, graph: dict[str|int, Node]):
         self._graph = graph
 
     @property

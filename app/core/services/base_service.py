@@ -3,9 +3,9 @@ from app.core.domain_services import IGraph, IConverterInputData
 
 class GraphServiceFile:
     def __init__(self, graph_repository: IGraph, converter: IConverterInputData, path: str):
-        self.converter = converter(path)
+        self.converter = converter(file_path=path)
         graph_data = self.converter.load()
-        self.graph_repository = graph_repository(graph_data)
+        self.graph_repository = graph_repository(graph=graph_data)
 
     def get_graph(self) -> dict[int, Node]:
         return self.graph_repository.graph
