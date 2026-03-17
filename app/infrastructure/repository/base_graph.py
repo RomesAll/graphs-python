@@ -74,7 +74,9 @@ class Graph(IGraph):
         degree_all_nodes = dict()
         for node in self._graph.values():
             degree_all_nodes[node.value] = len(node.edges)
-        return dict(sorted(degree_all_nodes.items(), reverse=desc))
+        return dict(sorted(degree_all_nodes.items(), 
+                           key=lambda item: item[1], 
+                           reverse=desc))
 
     def dfs(self):
         """
