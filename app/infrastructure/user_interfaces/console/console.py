@@ -49,9 +49,8 @@ class ConsoleUI:
                 self.file_path = input('Введите путь к файлу с входными данными в формате json (ctrl+c для выхода): ')
                 service = GraphServiceFile(Graph, JsonConverterListAdjacency, self.file_path)
             except KeyboardInterrupt as e:
-                self.file_path = None
                 self.console.print(e)
-                continue
+                return None
             except Exception as e:
                 self.file_path = None
                 self.console.print(e)

@@ -18,10 +18,9 @@
 <h3>Процесс установки </h3>
 ```
 git clone https://github.com/RomesAll/graphs-python.git
-cd graphs-python
-python3 -m venv venv
-source /venv/bin/activate
-pip install -r requirements.txt
+python -m venv venv
+python ./venv/bin/activate
+python pip install -r requirements.txt
 python app/main.py
 ```
 
